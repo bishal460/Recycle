@@ -122,3 +122,43 @@ $.each( eventList, function( i, time ) {
           alert("Successfully Logged out!!");
 
   }
+
+function viewWaste(){
+    window.location="viewWaste.html";
+}
+
+function ViewWaste(){
+var articleData;
+(function() {
+var newsAPI = "http://localhost/backend/api.php?module=waste&task=listAll";
+$.getJSON( newsAPI)
+.done(function( data ) {
+if(data.status==200){
+$("#newslist").empty();
+eventList = data.data;
+$.each( eventList, function( i, waste ) {
+
+    
+
+
+
+        
+        var type = $("<h1>").html(waste.wasteType);
+        var quantity=$("<p><b>").html(waste.wasteQuantity);
+            var location = $("<i>").html(waste.wasteLocation);
+              
+                        var listitem = $("<li>");
+                            listitem.append(type);
+                            listitem.append(quantity);
+                            listitem.append(location);
+                            
+                           
+                            $("#newslist").append(listitem);
+                            
+                            });
+                            $("#newslist").listview("refresh");
+                            }
+                            
+                            });
+                            })();
+                            }
