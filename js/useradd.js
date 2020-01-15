@@ -1,27 +1,63 @@
 function addWaste(){
-window.location ="addwaste.html";
+    var url = document.location.href,
+        params = url.split('?')[1].split('&'),
+        data = {}, tmp;
+    for (var i = 0, l = params.length; i < l; i++) {
+         tmp = params[i].split('=');
+         data[tmp[0]] = tmp[1];
+    }
+   var username = data.name
+        window.location="addwaste.html?name="+ encodeURIComponent(username)
 
 }
 
 function BackUser(){
-window.location ="userboard.html";
+    var url = document.location.href,
+        params = url.split('?')[1].split('&'),
+        data = {}, tmp;
+    for (var i = 0, l = params.length; i < l; i++) {
+         tmp = params[i].split('=');
+         data[tmp[0]] = tmp[1];
+    }
+   var username = data.name
+        window.location="userboard.html?name="+ encodeURIComponent(username)
 
 }
 
 function viewWaste(){
-window.location ="viewWaste.html";
-
+    var url = document.location.href,
+        params = url.split('?')[1].split('&'),
+        data = {}, tmp;
+    for (var i = 0, l = params.length; i < l; i++) {
+         tmp = params[i].split('=');
+         data[tmp[0]] = tmp[1];
+    }
+   var username = data.name
+        window.location="viewWaste.html?name="+ encodeURIComponent(username)
 }
 
 function viewTime(){
-window.location ="viewTime.html";
+    var url = document.location.href,
+        params = url.split('?')[1].split('&'),
+        data = {}, tmp;
+    for (var i = 0, l = params.length; i < l; i++) {
+         tmp = params[i].split('=');
+         data[tmp[0]] = tmp[1];
+    }
+   var username = data.name
+        window.location="viewTime.html?name="+ encodeURIComponent(username)
 
 }
 
 function add(){
 $(document).ready(function(){
-$('#userForm').submit(function(){
-
+$('#userForm').submit(function(e){
+    if(latitude == ''){
+        alert("Please click on map to select location")
+        return
+    }
+console.log(latitude)
+console.log(longitude)
 // show that something is loading
 $('#response').html("<b>Loading response...</b>");
 
@@ -50,15 +86,21 @@ return false;
 function myFunction(){
 var articleData;
 (function() {
-var newsAPI = "http://localhost/backend/api.php?module=waste&task=listAll";
+    var url = document.location.href,
+        params = url.split('?')[1].split('&'),
+        data = {}, tmp;
+    for (var i = 0, l = params.length; i < l; i++) {
+         tmp = params[i].split('=');
+         data[tmp[0]] = tmp[1];
+    }
+   var username = data.name
+var newsAPI = "http://localhost/backend/api.php?module=waste&task=listAll&username="+username;
 $.getJSON( newsAPI)
 .done(function( data ) {
 if(data.status==200){
 $("#newslist").empty();
 eventList = data.data;
 $.each( eventList, function( i, waste ) {
-
-    
     var Deletebutton =$("<a>").attr("href","#delete")
     .attr("data-transition","slidedown").html("Delete")
     .click({param1: i}, setDeleteData);
@@ -114,7 +156,15 @@ $.each( eventList, function( i, waste ) {
                             // $("#eventPrice").val(eventPrice);
                             // }
   function backEvent(){
-                            window.location="userboard.html";
+    var url = document.location.href,
+        params = url.split('?')[1].split('&'),
+        data = {}, tmp;
+    for (var i = 0, l = params.length; i < l; i++) {
+         tmp = params[i].split('=');
+         data[tmp[0]] = tmp[1];
+    }
+   var username = data.name
+        window.location="userboard.html?name="+ encodeURIComponent(username)
                             }
 
 

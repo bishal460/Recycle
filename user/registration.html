@@ -14,13 +14,13 @@
         <script type="text/javascript" src="../js/user.js"></script>
 </head>
 <body>
-        <div data-role="page" id="login">
-                <div data-role="header" data-position="fixed">
-                        <h2>Artist</h2>
+        <div data-role="page" id="login" >
+                <div data-role="header" data-position="fixed" style="background-color:blue;color:white;">
+                        <h2>Waste Recycle </h2>
                 </div>
                 <div data-role="main" class="ui-content">
-        <form id="userForm">
-            <div class="ui-field-contain">
+        <form id="userForm" >
+            <div class="ui-field-contain" >
                 <label for="txtName">User Name</label>
                 <input type="text" name="username"  data-clear-btn="true"/>
 
@@ -38,22 +38,24 @@
 
                 <label for="txtName">Type:</label>
                 <select name="type">
-                <option value="-1">Choose</option>
+                <option value="-1">Choose</option> 
                 <option value="collector">Collector</option>
                 <option value="user">User</option>
+                <option value="manager">Manager</option>
+                <option value="buyer">Buyer</option>
                 <!-- <option value="man">man</option> -->
 
-                </select>
+                </select> <br>
 
               
-                <input type="submit" name="submit" onclick="userRegister()" value="Register">
+                <input type="submit" name="submit" onclick="userRegister()" value="Register" > <br>
                 <a class="ui-btn ui-icon-back ui-btn-icon-left"
-                    onclick="backLogin()">Go Back</a>
+                    onclick="backLogin()" style="background-color:red;color:white;">Go Back</a>
             </div>
         </form>
     </div>
-                <div data-role="footer" data-position="fixed">
-                        <h2>Created by ABC</h2>
+                <div data-role="footer" data-position="fixed" style="background-color:blue;color:white;">
+                        <h2>Created by Bishal</h2>
                         
                 </div>
                 

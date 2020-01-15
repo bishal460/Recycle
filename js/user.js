@@ -18,13 +18,7 @@ function userRegister(){
             alert("Successfully regsitered!!");
              
         }).fail(function(xhr, status, error) {
-         
-            // just in case posting your form failed
-            
-            alert( xhr );
-            alert(status);
-            alert(error);
-             
+            alert("Failed")
         });
  
         // to prevent refreshing the whole page page
@@ -46,7 +40,7 @@ function Login(){
 
     var useremail= document.getElementById('userEmail').value
     var userpassword=document.getElementById('userPassword').value
-
+    var username=document.getElementById('username').value
     var userApi = "http://localhost/backend/api.php?module=user&task=loginAll";
     $.post( userApi, {useremail: useremail, userpassword: userpassword})
     .done(function(response){
@@ -59,14 +53,17 @@ function Login(){
             if(data.data.type=='collector'){
                 alert("Successfully Logged in");
                 window.location ='manager/managerdashboard.html';
-
-
-            }else{
+            }else if(data.data.type == 'manager'){
                 alert("Successfully Logged in");
-                window.location="user/userboard.html";
+                window.location="manager2/managerdashboard.html";
+            }else if(data.data.type == 'buyer'){
+                alert("Successfully Logged in");
+                window.location="buyer/buyer.html?name="+ encodeURIComponent(username);
+            }else if(data.data.type == 'user'){
+                alert("Successfully Logged in");
+                window.location="user/userboard.html?name="+ encodeURIComponent(username);
             }
         }
-
     });
 
 

@@ -5,7 +5,13 @@ window.location ="addInfo.html";
 function back(){
 window.location ="managerdashboard.html";
 }
+function viewCollectedWasteformanager(){
+window.location = "viewWaste.html"
+}
 
+function viewBid(){
+window.location = "bid.html"
+}
 
 // inserting time by the collector
 function add(){
@@ -127,6 +133,10 @@ function viewWaste(){
     window.location="viewWaste.html";
 }
 
+function viewCollectedWaste(){
+    window.location="collected.html";
+}
+
 function ViewWaste(){
 var articleData;
 (function() {
@@ -137,12 +147,6 @@ if(data.status==200){
 $("#newslist").empty();
 eventList = data.data;
 $.each( eventList, function( i, waste ) {
-
-    
-
-
-
-        
         var type = $("<h1>").html(waste.wasteType);
         var quantity=$("<p><b>").html(waste.wasteQuantity);
             var location = $("<i>").html(waste.wasteLocation);

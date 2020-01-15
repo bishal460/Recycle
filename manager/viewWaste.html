@@ -6,28 +6,44 @@
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
         <meta http-equiv="Access-Control-Allow-Origin" content="*">
         <title>Listview - jQuery Mobile Demos</title>
-        <link rel="shortcut icon" href="../jquery.mobile/images/favicon.ico">
+        <!-- <link rel="shortcut icon" href="../jquery.mobile/images/favicon.ico"> -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
-        <link rel="stylesheet" href="../css/themes/default/jquery.mobile-1.4.5.min.css">
+        <!-- <link rel="stylesheet" href="../css/themes/default/jquery.mobile-1.4.5.min.css"> -->
         <script src="../js/jquery.js"></script>
         <script src="../js/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="../js/collector.js"></script>
+        <script type="text/javascript" src="../js/test.js"></script>
+        <script src='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.css' rel='stylesheet' />
     </head>
     <body>
+        <style type="text/css">
+            .collectorhead{
+                color:blue;
+            }
+            .collectorhead:hover{
+                color:grey;
+                cursor: grab;
+            }
+            #map { width:100%; 
+            height: 400px;}
+        </style>
         <div data-role="page" id="listpage" data-quicklinks="true">
             <div data-role="header">
                 <h1>View Waste</h1>
             </div>
             <!-- /header -->
-            <button type="button" onclick="ViewWaste()">View</button>
+          
             <label></label>
             <button onclick="backEvent()">Back</button>
             <div role="main" class="ui-content">
                 <h2>Recent Waste</h2>
                 <div data-demo-html="true">
+                    <div id="map"></div>
                     <ul data-role="listview" id="newslist">
-                        <li>Loading Waste</li>
+                        <li onclick="">Loading Waste</li>
                     </ul>
+
                 </div>
             </div>
         </div>
@@ -83,6 +99,79 @@
                     </div>
                     
                 </div>
-                
+                <script type="text/javascript">
+                    L.mapbox.accessToken = 'pk.eyJ1IjoibGVvbmd1cnVuZzAyOSIsImEiOiJjang2NHZzengwODJuNDVxdTM2NDBmdWJlIn0.CPb6da7yRq1sII4tOt7quA';
+        var map = L.mapbox.map('map')
+            .setView([27.7172, 85.3240], 12)
+            .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
+                    document.getElementById("newslist").addEventListener("click",function(e) {
+                    if(e.target.nodeName == 'H2'){
+                        var package = e.target.id
+                        var data = package.split("/")
+                        var check = confirm("Do you wanna this waste")
+                        var data1 ={
+                              wastename : data[0],
+                              quantity : data[1],
+                              latitude : data[2],
+                              longitude : data[3],
+                              image : data[4]
+                            }
+                        if(check){
+                            var formdata = new FormData()
+                            for(x in data1){
+                                formdata.append(x,data1[x])
+                            }
+                            $.ajax(
+      {
+        url: 'http://localhost/backend/collect.php',
+        method:'POST',
+        contentType:false,
+        processData:false, // for all type files it should be false otherwise application/json
+        data: formdata,   // JSON.stringify(data)
+        dataType:'json',
+        statusCode:{
+          200: ()=>{
+            console.log('200')
+          }
+        },
+        success: (result,status,jqxHR)=>{
+          //console.log(status)
+          //console.log(result)
+        },
+        error:(status)=>{
+          //console.log(status)
+        }
+      }
+    )
+
+    $.ajax(
+      {
+        url: 'http://localhost/backend/deleteuserwaste.php',
+        method:'POST',
+        contentType:false,
+        processData:false, // for all type files it should be false otherwise application/json
+        data: formdata,   // JSON.stringify(data)
+        dataType:'json',
+        statusCode:{
+          200: ()=>{
+            console.log('200')
+          }
+        },
+        success: (result,status,jqxHR)=>{
+          //console.log(status)
+          //console.log(result)
+        },
+        error:(status)=>{
+          //console.log(status)
+        }
+      }
+    )                        
+
+
+                            
+                     }
+                    }
+    });
+                </script>
             </body>
         </html>
