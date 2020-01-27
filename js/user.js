@@ -29,7 +29,7 @@ function userRegister(){
               }
                $.ajax(
                     {
-                      url: "http://localhost/backend/signup.php",
+                      url: "c/signup.php",
                       method:'POST',
                       contentType:false,
                       processData:false, // for all type files it should be false otherwise application/json
@@ -62,7 +62,7 @@ function Login(){
     var useremail= document.getElementById('userEmail').value
     var userpassword=document.getElementById('userPassword').value
     var username=document.getElementById('username').value
-    var userApi = "https://recyclewaste123.000webhostapp.com/login.php";
+    var userApi = "192.168.10.92/backend/login.php";
 
     var data ={useremail: useremail, userpassword: userpassword}
     var formdata = new FormData()
