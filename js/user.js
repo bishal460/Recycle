@@ -9,20 +9,41 @@ function userRegister(){
      
         // show that something is loading
         $('#response').html("<b>Loading response...</b>");
-         
-       
-        $.post('http://localhost/backend/api.php?module=user&task=storeAll', $(this).serialize(), function(data){
-             
-            // show the response
-            // $('#response').html(data);
-            alert("Successfully regsitered!!");
-             
-        }).fail(function(xhr, status, error) {
-            alert("Failed")
-        });
- 
-        // to prevent refreshing the whole page page
-        // return false;
+        var useremail= document.getElementById('useremail').value
+            var userpassword=document.getElementById('userpassword').value
+            var username=document.getElementById('username').value
+            var useraddress=document.getElementById('useraddress').value
+            var userphn=document.getElementById('userphn').value
+            var type = document.getElementById('type').value
+        var data ={useremail: useremail,
+                    userpassword: userpassword,
+                    useraddress : useraddress,
+                    userphn : userphn,
+                    type : type,
+                    username:username
+                    }
+            var formdata = new FormData()
+
+              for(x in data){
+                formdata.append(x,data[x])
+              }
+               $.ajax(
+                    {
+                      url: "http://localhost/backend/signup.php",
+                      method:'POST',
+                      contentType:false,
+                      processData:false, // for all type files it should be false otherwise application/json
+                      data: formdata,   // JSON.stringify(data)
+                      dataType:'json',
+                      success: (result,status,jqxHR)=>{
+                                                        alert("success")
+
+                       },
+                                    error:(result,status) =>{
+                                      alert("success")
+                                    }
+                                  }
+                                )
  
     });
 });
@@ -41,15 +62,56 @@ function Login(){
     var useremail= document.getElementById('userEmail').value
     var userpassword=document.getElementById('userPassword').value
     var username=document.getElementById('username').value
-    var userApi = "http://localhost/backend/api.php?module=user&task=loginAll";
-    $.post( userApi, {useremail: useremail, userpassword: userpassword})
-    .done(function(response){
-        console.log(response);
-        data = JSON.parse(response);
-        console.log(data.status);
-         if(data.status==200){
-            localStorage.setItem('user', JSON.stringify(data.data));
-            console.log('set in local storage');
+    var userApi = "https://recyclewaste123.000webhostapp.com/login.php";
+
+    var data ={useremail: useremail, userpassword: userpassword}
+    var formdata = new FormData()
+
+      for(x in data){
+        formdata.append(x,data[x])
+      }
+       $.ajax(
+            {
+              url: userApi,
+              method:'POST',
+              contentType:false,
+              processData:false, // for all type files it should be false otherwise application/json
+              data: formdata,   // JSON.stringify(data)
+              dataType:'json',
+              success: (result,status,jqxHR)=>{
+                console.log(result.type)
+                if(result.type=='collector'){
+                                alert("Successfully Logged in");
+                                window.location ='manager/managerdashboard.html';
+                            }else if(result.type == 'manager'){
+                                alert("Successfully Logged in");
+                                window.location="manager2/managerdashboard.html";
+                            }else if(result.type == 'buyer'){
+                                alert("Successfully Logged in");
+                                window.location="buyer/buyer.html?name="+ encodeURIComponent(username);
+                            }else if(result.type == 'user'){
+                                alert("Successfully Logged in");
+                                window.location="user/userboard.html?name="+ encodeURIComponent(username);
+                            }
+              },
+              error:(result,status) =>{
+                alert("failed")
+              }
+            }
+          )
+
+
+
+
+
+//    $.post( userApi, {useremail: useremail, userpassword: userpassword})
+//    .done(function(response, status){
+//        console.log(status);
+//        data = JSON.parse(response);
+//        console.log(data.status);
+//         if(data.status==200){
+//            localStorage.setItem('user', JSON.stringify(data.data));
+//            console.log('set in local storage');
             if(data.data.type=='collector'){
                 alert("Successfully Logged in");
                 window.location ='manager/managerdashboard.html';
@@ -63,8 +125,8 @@ function Login(){
                 alert("Successfully Logged in");
                 window.location="user/userboard.html?name="+ encodeURIComponent(username);
             }
-        }
-    });
+//        }
+//    });
 
 
 
