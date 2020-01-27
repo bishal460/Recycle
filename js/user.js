@@ -62,7 +62,7 @@ function Login(){
     var useremail= document.getElementById('userEmail').value
     var userpassword=document.getElementById('userPassword').value
     var username=document.getElementById('username').value
-    var userApi = "192.168.10.92/backend/login.php";
+    var userApi = "http://192.168.10.92/backend/login.php";
 
     var data ={useremail: useremail, userpassword: userpassword}
     var formdata = new FormData()
